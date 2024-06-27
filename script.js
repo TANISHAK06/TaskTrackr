@@ -387,7 +387,6 @@ const addBtn = document.querySelector(".add-btn");
 const cancelBtn = document.querySelector(".cancel-btn");
 const totalTasks = document.getElementById("total-tasks");
 
-menuBtn.addEventListener("click", toggleScreen);
 backBtn.addEventListener("click", toggleScreen);
 addTaskBtn.addEventListener("click", toggleAddTaskForm);
 blackBackdrop.addEventListener("click", toggleAddTaskForm);
@@ -401,4 +400,56 @@ categories.forEach((category) => {
   option.value = category.title.toLowerCase();
   option.textContent = category.title;
   categorySelect.appendChild(option);
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const body = document.body;
+  const screenBackdrop = document.querySelector(".screen-backdrop");
+  const menuBtn = document.querySelector(".menu-btn");
+  const themeSelector = document.querySelector(".theme-selector");
+
+  const themes = {
+    blue: {
+      bodyColor: "white",
+      backdropColor: "lightskyblue",
+    },
+    green: {
+      bodyColor: "#90f6d7",
+      backdropColor: "#4ac3be",
+    },
+    pink: {
+      bodyColor: "#f4e9f3",
+      backdropColor: "#ffc9d8",
+    },
+    peach: {
+      bodyColor: "#e4bcad",
+      backdropColor: "#ffb190",
+    },
+  };
+
+  const applyTheme = (theme) => {
+    const selectedTheme = themes[theme];
+    body.style.backgroundColor = selectedTheme.bodyColor;
+    screenBackdrop.style.backgroundColor = selectedTheme.backdropColor;
+  };
+
+ 
+  applyTheme("blue");
+
+
+  menuBtn.addEventListener("click", () => {
+    themeSelector.style.display =
+      themeSelector.style.display === "none" ||
+      themeSelector.style.display === ""
+        ? "block"
+        : "none";
+  });
+
+  // Apply selected theme
+  document.querySelectorAll(".theme-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const theme = btn.getAttribute("data-theme");
+      applyTheme(theme);
+      themeSelector.style.display = "none"; 
+    });
+  });
 });
